@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Optimal stopping</h1>
+  {% if active_game %}
+    <p>There is {{ numbers_count }}, mean is {{ mean }}, std is random between {{ std_lower_bound}}:{{ std_upper_bound }} </p>
+    <p>Hashed setup: {{hashed_setup}}</p>
+    <p>Revealed numbers: {{revealed_numbers}}</p>
+    <form method="post">
+      <input type="hidden" name="action" value="next">
+      <input type="hidden" name="bet" value="50">
+      <button type="submit">Next</button>
+    </form>
+    <form method="post">
+      <input type="hidden" name="action" value="stop">
+      <button type="submit">Stop</button>
+    </form>
+  {% else %}
+    <p>Start game</p>
+    <form method="post">
+      <input type="hidden" name="action" value="init">
+      <input name="bet" value="100">
+      <button type="submit">Start</button>
+    </form>
+  {% endif %}
+  <p class=".text-info">{{ message }}</p>
+{% endblock %}

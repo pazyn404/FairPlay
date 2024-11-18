@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Statistics</h1>
+  <h3>Current balance: {{current_user.balance}}</h3>
+  {% for game_name, data in data.items() %}
+    <h3>{{ game_name }}</h3>
+    {% for item in data %}
+      <h6>Game</h6>
+      {% for key, value in item.items() %}
+        <p>{{ key }}: {{ value }}</p>
+      {% endfor %}
+    {% endfor %}
+  {% endfor %}
+{% endblock %}

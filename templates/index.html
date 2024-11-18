@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if current_user.is_authenticated %}
+    <h1>Welcome back!</h1>
+  {% else %}
+    <h1>Please login or create account</h1>
+  {% endif %}
+  <br>
+  <span class=".text-info">{{ message }}</span>
+{% endblock %}

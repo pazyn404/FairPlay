@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Create an account</h1>
+  <form method="post">
+    <label>Username:</label>
+    <input type="text" name="username" minlength="4"/>
+    <label>Password:</label>
+    <input type="password" name="password" minlength="8"/>
+    <button type="submit">Submit</button>
+  </form>
+  <p class=".text-info">{{ message }}</p>
+{% endblock %}
