@@ -64,9 +64,6 @@ class BaseGame:
         setup_params = cls._generate_setup()
         game = cls(user_id=user_id, salt=salt, bet=bet, **setup_params)
 
-        db.session.add(game)
-        db.session.commit()
-
         return game
 
     @classmethod
@@ -133,19 +130,18 @@ class OptimalStoppingGame(db.Model, BaseGame):
         elif action == "stop":
             position = self.position
             numbers = self.numbers
-
             self.win = self._win_condition(numbers, position)
             self.game_over = True
         elif action == "next":
             self.position += 1
 
-        db.session.add(self)
-        db.session.commit()
-
     def _check_payload(self, post_data):
         action = post_data.get("action")
         allowed_actions = ["init", "stop", "next"]
         if action not in allowed_actions:
+            return False
+
+        if action == "init" and self.id is not None:
             return False
 
         if action == "next" and self.position == self.CONFIG.NUMBERS_COUNT - 1:

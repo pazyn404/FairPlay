@@ -68,6 +68,7 @@ def logout():
 def games():
     return render_template("games.html")
 
+
 @app.route("/play/<game_name>", methods=["GET", "POST"])
 @login_required
 def play(game_name):
@@ -92,15 +93,16 @@ def play(game_name):
         if current_user.balance < bet:
             return render_template(template_path, message="You don't have enough money.", active_game=False)
 
-        game = game_model.create(bet)
-
         current_user.balance -= bet
-        db.session.commit()
+
+        game = game_model.create(bet)
+        db.session.add(game)
 
     game.play(request.form)
     if game.win:
         current_user.balance += 2 * game.bet
-        db.session.commit()
+
+    db.session.commit()
 
     if not game.game_over:
         return render_template(template_path, **game.open_data(), active_game=True)
